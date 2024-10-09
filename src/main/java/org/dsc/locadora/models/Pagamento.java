@@ -45,13 +45,6 @@ public class Pagamento {
         this.dataPagamento = dataPagamento;
     }
 
-    public String getTipoPagamento() {
-        return tipoPagamento;
-    }
-
-    public void setTipoPagamento(String tipoPagamento) {
-        this.tipoPagamento = tipoPagamento;
-    }
 
     public Locacao getLocacao() {
         return locacao;

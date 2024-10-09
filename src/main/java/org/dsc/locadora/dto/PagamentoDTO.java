@@ -4,17 +4,15 @@ public class PagamentoDTO {
 
     private Long id;
     private double valor;
-    private String metodoPagamento;
     private String dataPagamento;
 
-    public PagamentoDTO(Long id, double valor, String metodoPagamento, String dataPagamento) {
+    public PagamentoDTO(Long id, double valor, String dataPagamento) {
         this.id = id;
         this.valor = valor;
-        this.metodoPagamento = metodoPagamento;
         this.dataPagamento = dataPagamento;
     }
+    public PagamentoDTO(){}
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -29,14 +27,6 @@ public class PagamentoDTO {
 
     public void setValor(double valor) {
         this.valor = valor;
-    }
-
-    public String getMetodoPagamento() {
-        return metodoPagamento;
-    }
-
-    public void setMetodoPagamento(String metodoPagamento) {
-        this.metodoPagamento = metodoPagamento;
     }
 
     public String getDataPagamento() {

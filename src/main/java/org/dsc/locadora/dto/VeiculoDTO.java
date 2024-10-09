@@ -23,6 +23,8 @@ public class VeiculoDTO {
         this.quilometragem = quilometragem;
     }
 
+    public VeiculoDTO() {}
+
     public Long getId() {
         return id;
     }

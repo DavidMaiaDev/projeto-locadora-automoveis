@@ -17,8 +17,9 @@ public class LocacaoDTO {
         this.dataFim = dataFim;
         this.valorTotal = valorTotal;
     }
+    public LocacaoDTO() {}
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }

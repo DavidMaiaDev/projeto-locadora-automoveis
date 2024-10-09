@@ -16,8 +16,9 @@ public class ClienteDTO {
         this.email = email;
         this.endereco = endereco;
     }
+    public ClienteDTO() {}
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }

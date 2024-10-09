@@ -20,7 +20,8 @@ public class ReservaDTO {
         this.status = status;
     }
 
-    // Getters and Setters
+    public ReservaDTO() {}
+
     public Long getId() {
         return id;
     }
