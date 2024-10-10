@@ -1,16 +1,18 @@
 package org.dsc.locadora.dto;
 
+import java.time.LocalDate;
+
 public class ReservaDTO {
 
     private Long id;
     private Long clienteId;
     private Long veiculoId;
-    private String dataReserva;
-    private String dataInicio;
-    private String dataFim;
+    private LocalDate dataReserva;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
     private String status;
 
-    public ReservaDTO(Long id, Long clienteId, Long veiculoId, String dataReserva, String dataInicio, String dataFim, String status) {
+    public ReservaDTO(Long id, Long clienteId, Long veiculoId, LocalDate dataReserva, LocalDate dataInicio, LocalDate dataFim, String status) {
         this.id = id;
         this.clienteId = clienteId;
         this.veiculoId = veiculoId;
@@ -46,27 +48,27 @@ public class ReservaDTO {
         this.veiculoId = veiculoId;
     }
 
-    public String getDataReserva() {
+    public LocalDate getDataReserva() {
         return dataReserva;
     }
 
-    public void setDataReserva(String dataReserva) {
+    public void setDataReserva(LocalDate dataReserva) {
         this.dataReserva = dataReserva;
     }
 
-    public String getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(String dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public String getDataFim() {
+    public LocalDate getDataFim() {
         return dataFim;
     }
 
-    public void setDataFim(String dataFim) {
+    public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }
 

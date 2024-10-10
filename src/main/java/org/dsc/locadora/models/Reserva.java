@@ -1,7 +1,6 @@
 package org.dsc.locadora.models;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
@@ -11,9 +10,10 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate dataInicio;
-    private LocalDate dataFim;
-    private String status;
+    private LocalDate dataReserva; // Data em que a reserva foi feita
+    private LocalDate dataInicio; // Data em que o cliente pretende pegar o veículo
+    private LocalDate dataFim; // Data em que o cliente pretende devolver o veículo
+    private String status; // Status da reserva (Ativa, Cancelada, Concluída)
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -23,9 +23,22 @@ public class Reserva {
     @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
 
-    private double valorTotal;
+    private double valorTotal; // Valor total da reserva
 
-    // Getters and Setters
+    // Construtores, Getters e Setters
+
+    public Reserva() {
+    }
+
+    public Reserva(LocalDate dataReserva, LocalDate dataInicio, LocalDate dataFim, String status, Cliente cliente, Veiculo veiculo, double valorTotal) {
+        this.dataReserva = dataReserva;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.status = status;
+        this.cliente = cliente;
+        this.veiculo = veiculo;
+        this.valorTotal = valorTotal;
+    }
 
     public Long getId() {
         return id;
@@ -33,6 +46,14 @@ public class Reserva {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getDataReserva() {
+        return dataReserva;
+    }
+
+    public void setDataReserva(LocalDate dataReserva) {
+        this.dataReserva = dataReserva;
     }
 
     public LocalDate getDataInicio() {

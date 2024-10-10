@@ -4,6 +4,7 @@ import org.dsc.locadora.dto.ReservaDTO;
 import org.dsc.locadora.models.Reserva;
 import org.dsc.locadora.services.ReservaService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,15 @@ public class ReservaController {
     public ReservaController(ReservaService reservaService, ModelMapper modelMapper) {
         this.reservaService = reservaService;
         this.modelMapper = modelMapper;
+
+        // Configurando o ModelMapper para mapear corretamente as datas
+        modelMapper.addMappings(new PropertyMap<Reserva, ReservaDTO>() {
+            @Override
+            protected void configure() {
+                map().setDataInicio(source.getDataInicio());
+                map().setDataFim(source.getDataFim());
+            }
+        });
     }
 
     @GetMapping("/reservas/{reservaId}")
@@ -54,12 +64,10 @@ public class ReservaController {
         reservaService.deleteReserva(reservaId);
     }
 
-    // Converte o modelo Reserva para ReservaDTO usando ModelMapper
     private ReservaDTO convertToDTO(Reserva reserva) {
         return modelMapper.map(reserva, ReservaDTO.class);
     }
 
-    // Converte o DTO ReservaDTO para o modelo Reserva usando ModelMapper
     private Reserva convertToEntity(ReservaDTO reservaDTO) {
         return modelMapper.map(reservaDTO, Reserva.class);
     }
