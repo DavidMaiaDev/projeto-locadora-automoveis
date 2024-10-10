@@ -1,7 +1,11 @@
 package org.dsc.locadora.services;
 
+import org.dsc.locadora.models.Cliente;
 import org.dsc.locadora.models.Locacao;
+import org.dsc.locadora.models.Veiculo;
+import org.dsc.locadora.repository.ClienteRepository;
 import org.dsc.locadora.repository.LocacaoRepository;
+import org.dsc.locadora.repository.VeiculoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +15,13 @@ import java.util.Optional;
 public class LocacaoService {
 
     private final LocacaoRepository locacaoRepository;
+    private final ClienteRepository clienteRepository;
+    private final VeiculoRepository veiculoRepository;
 
-    public LocacaoService(LocacaoRepository locacaoRepository) {
+    public LocacaoService(LocacaoRepository locacaoRepository, ClienteRepository clienteRepository, VeiculoRepository veiculoRepository) {
         this.locacaoRepository = locacaoRepository;
+        this.clienteRepository = clienteRepository;
+        this.veiculoRepository = veiculoRepository;
     }
 
     public List<Locacao> listLocacoes() {
@@ -37,8 +45,6 @@ public class LocacaoService {
             locacaoExistente.setDataDevolucaoReal(locacaoAtualizada.getDataDevolucaoReal());
             locacaoExistente.setValorPago(locacaoAtualizada.getValorPago());
             locacaoExistente.setStatus(locacaoAtualizada.getStatus());
-            locacaoExistente.setCliente(locacaoAtualizada.getCliente());
-            locacaoExistente.setVeiculo(locacaoAtualizada.getVeiculo());
             return locacaoRepository.save(locacaoExistente);
         }
         return null;

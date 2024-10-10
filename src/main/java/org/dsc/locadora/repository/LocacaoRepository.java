@@ -1,7 +1,5 @@
 package org.dsc.locadora.repository;
 
-
-
 import org.dsc.locadora.models.Locacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

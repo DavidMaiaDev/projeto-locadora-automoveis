@@ -24,7 +24,6 @@ public class Locacao {
 
     private double valorPago;
     private String status;
-    
 
     public Long getId() {
         return id;

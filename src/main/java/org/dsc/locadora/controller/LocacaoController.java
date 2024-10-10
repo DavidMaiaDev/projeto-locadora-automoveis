@@ -4,7 +4,6 @@ import org.dsc.locadora.dto.LocacaoDTO;
 import org.dsc.locadora.models.Locacao;
 import org.dsc.locadora.services.LocacaoService;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +14,7 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/api")
 public class LocacaoController {
 
-
     private final LocacaoService locacaoService;
-
     private final ModelMapper modelMapper;
 
     public LocacaoController(LocacaoService locacaoService, ModelMapper modelMapper) {

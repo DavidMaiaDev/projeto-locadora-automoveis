@@ -1,24 +1,30 @@
 package org.dsc.locadora.dto;
 
+import java.time.LocalDate;
+
 public class LocacaoDTO {
 
     private Long id;
     private Long clienteId;
     private Long veiculoId;
-    private String dataInicio;
-    private String dataFim;
-    private double valorTotal;
+    private LocalDate dataLocacao;
+    private LocalDate dataDevolucaoPrevista;
+    private LocalDate dataDevolucaoReal;
+    private double valorPago;
+    private String status;
 
-    public LocacaoDTO(Long id, Long clienteId, Long veiculoId, String dataInicio, String dataFim, double valorTotal) {
+    public LocacaoDTO() {}
+
+    public LocacaoDTO(Long id, Long clienteId, Long veiculoId, LocalDate dataLocacao, LocalDate dataDevolucaoPrevista, LocalDate dataDevolucaoReal, double valorPago, String status) {
         this.id = id;
         this.clienteId = clienteId;
         this.veiculoId = veiculoId;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
-        this.valorTotal = valorTotal;
+        this.dataLocacao = dataLocacao;
+        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
+        this.dataDevolucaoReal = dataDevolucaoReal;
+        this.valorPago = valorPago;
+        this.status = status;
     }
-    public LocacaoDTO() {}
-
 
     public Long getId() {
         return id;
@@ -44,27 +50,43 @@ public class LocacaoDTO {
         this.veiculoId = veiculoId;
     }
 
-    public String getDataInicio() {
-        return dataInicio;
+    public LocalDate getDataLocacao() {
+        return dataLocacao;
     }
 
-    public void setDataInicio(String dataInicio) {
-        this.dataInicio = dataInicio;
+    public void setDataLocacao(LocalDate dataLocacao) {
+        this.dataLocacao = dataLocacao;
     }
 
-    public String getDataFim() {
-        return dataFim;
+    public LocalDate getDataDevolucaoPrevista() {
+        return dataDevolucaoPrevista;
     }
 
-    public void setDataFim(String dataFim) {
-        this.dataFim = dataFim;
+    public void setDataDevolucaoPrevista(LocalDate dataDevolucaoPrevista) {
+        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
     }
 
-    public double getValorTotal() {
-        return valorTotal;
+    public LocalDate getDataDevolucaoReal() {
+        return dataDevolucaoReal;
     }
 
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setDataDevolucaoReal(LocalDate dataDevolucaoReal) {
+        this.dataDevolucaoReal = dataDevolucaoReal;
+    }
+
+    public double getValorPago() {
+        return valorPago;
+    }
+
+    public void setValorPago(double valorPago) {
+        this.valorPago = valorPago;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
