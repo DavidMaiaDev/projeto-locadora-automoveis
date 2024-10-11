@@ -23,9 +23,9 @@ public class Reserva {
     @JoinColumn(name = "veiculo_id")
     private Veiculo veiculo;
 
-    private double valorTotal; // Valor total da reserva
+    private double valorTotal;
 
-    // Construtores, Getters e Setters
+
 
     public Reserva() {
     }

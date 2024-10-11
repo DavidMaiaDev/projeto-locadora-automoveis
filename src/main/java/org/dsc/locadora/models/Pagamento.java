@@ -14,7 +14,6 @@ public class Pagamento {
 
     private double valor;
     private LocalDate dataPagamento;
-    private String tipoPagamento;
 
     @ManyToOne
     @JoinColumn(name = "locacao_id")

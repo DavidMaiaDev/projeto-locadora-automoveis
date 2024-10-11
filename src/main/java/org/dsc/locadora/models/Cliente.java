@@ -20,7 +20,7 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente")
     private List<Locacao> historicoLocacoes;
 
-    // Getters and Setters
+
 
     public Long getId() {
         return id;
