@@ -1,16 +1,31 @@
 package org.dsc.locadora.dto;
 
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+
 import java.time.LocalDate;
 
 public class LocacaoDTO {
 
+
     private Long id;
+    @NotNull
     private Long clienteId;
+    @NotNull
     private Long veiculoId;
+
+    @NotNull
     private LocalDate dataLocacao;
+
+    @FutureOrPresent
     private LocalDate dataDevolucaoPrevista;
+
     private LocalDate dataDevolucaoReal;
+
+    @PositiveOrZero
     private double valorPago;
+
     private String status;
 
     public LocacaoDTO() {}

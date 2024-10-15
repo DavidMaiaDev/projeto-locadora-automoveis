@@ -1,5 +1,6 @@
 package org.dsc.locadora.controller;
 
+import jakarta.validation.Valid;
 import org.dsc.locadora.dto.LocacaoDTO;
 import org.dsc.locadora.models.Locacao;
 import org.dsc.locadora.services.LocacaoService;
@@ -35,14 +36,14 @@ public class LocacaoController {
     }
 
     @PostMapping("/locacoes")
-    public LocacaoDTO createLocacao(@RequestBody LocacaoDTO locacaoDTO) {
+    public LocacaoDTO createLocacao(@Valid @RequestBody LocacaoDTO locacaoDTO) {
         Locacao locacao = convertToEntity(locacaoDTO);
         Locacao locacaoCreated = locacaoService.saveLocacao(locacao);
         return convertToDTO(locacaoCreated);
     }
 
     @PutMapping("/locacoes/{locacaoId}")
-    public LocacaoDTO updateLocacao(@PathVariable Long locacaoId, @RequestBody LocacaoDTO locacaoDTO) {
+    public LocacaoDTO updateLocacao(@PathVariable Long locacaoId,@Valid @RequestBody LocacaoDTO locacaoDTO) {
         Locacao locacao = convertToEntity(locacaoDTO);
         Locacao locacaoUpdated = locacaoService.updateLocacao(locacaoId, locacao);
         return convertToDTO(locacaoUpdated);

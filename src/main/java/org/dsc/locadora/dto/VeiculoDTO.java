@@ -1,16 +1,27 @@
 package org.dsc.locadora.dto;
 
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class VeiculoDTO {
 
     private Long id;
+
+    @NotBlank
     private String modelo;
     private String marca;
     private String placa;
+
+    @Min(1886)
     private int ano;
     private boolean disponibilidade;
     private String categoria;
+
+    @PositiveOrZero
     private double quilometragem;
+
 
     public VeiculoDTO(Long id, String modelo, String marca, String placa, int ano, boolean disponibilidade, String categoria, double quilometragem) {
         this.id = id;

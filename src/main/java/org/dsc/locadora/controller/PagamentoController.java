@@ -1,5 +1,6 @@
 package org.dsc.locadora.controller;
 
+import jakarta.validation.Valid;
 import org.dsc.locadora.dto.PagamentoDTO;
 import org.dsc.locadora.models.Pagamento;
 import org.dsc.locadora.services.PagamentoService;
@@ -35,14 +36,14 @@ public class PagamentoController {
     }
 
     @PostMapping("/pagamentos")
-    public PagamentoDTO createPagamento(@RequestBody PagamentoDTO pagamentoDTO) {
+    public PagamentoDTO createPagamento(@Valid @RequestBody PagamentoDTO pagamentoDTO) {
         Pagamento pagamento = convertToEntity(pagamentoDTO);
         Pagamento pagamentoCreated = pagamentoService.savePagamento(pagamento);
         return convertToDTO(pagamentoCreated);
     }
 
     @PutMapping("/pagamentos/{pagamentoId}")
-    public PagamentoDTO updatePagamento(@PathVariable Long pagamentoId, @RequestBody PagamentoDTO pagamentoDTO) {
+    public PagamentoDTO updatePagamento(@Valid @PathVariable Long pagamentoId, @RequestBody PagamentoDTO pagamentoDTO) {
         Pagamento pagamento = convertToEntity(pagamentoDTO);
         Pagamento pagamentoUpdated = pagamentoService.updatePagamento(pagamentoId, pagamento);
         return convertToDTO(pagamentoUpdated);

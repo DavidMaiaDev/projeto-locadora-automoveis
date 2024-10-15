@@ -1,5 +1,6 @@
 package org.dsc.locadora.controller;
 
+import jakarta.validation.Valid;
 import org.dsc.locadora.dto.ClienteDTO;
 import org.dsc.locadora.models.Cliente;
 import org.dsc.locadora.services.ClienteService;
@@ -35,14 +36,14 @@ public class ClienteController {
     }
 
     @PostMapping("/clientes")
-    public ClienteDTO createCliente(@RequestBody ClienteDTO clienteDTO) {
+    public ClienteDTO createCliente(@Valid @RequestBody ClienteDTO clienteDTO) {
         Cliente cliente = convertToEntity(clienteDTO);
         Cliente clienteCreated = clienteService.saveCliente(cliente);
         return convertToDTO(clienteCreated);
     }
 
     @PutMapping("/clientes/{clienteId}")
-    public ClienteDTO updateCliente(@PathVariable Long clienteId, @RequestBody ClienteDTO clienteDTO) {
+    public ClienteDTO updateCliente(@PathVariable Long clienteId, @Valid @RequestBody ClienteDTO clienteDTO) {
         Cliente cliente = convertToEntity(clienteDTO);
         Cliente clienteUpdated = clienteService.updateCliente(clienteId, cliente);
         return convertToDTO(clienteUpdated);

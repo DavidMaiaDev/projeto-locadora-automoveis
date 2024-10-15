@@ -1,10 +1,14 @@
 package org.dsc.locadora.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public class ReservaDTO {
 
     private Long id;
+
+    @NotNull
     private Long clienteId;
     private Long veiculoId;
     private LocalDate dataReserva;

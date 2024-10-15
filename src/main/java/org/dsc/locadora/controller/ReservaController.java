@@ -1,5 +1,6 @@
 package org.dsc.locadora.controller;
 
+import jakarta.validation.Valid;
 import org.dsc.locadora.dto.ReservaDTO;
 import org.dsc.locadora.models.Reserva;
 import org.dsc.locadora.services.ReservaService;
@@ -22,7 +23,7 @@ public class ReservaController {
         this.reservaService = reservaService;
         this.modelMapper = modelMapper;
 
-        // Configurando o ModelMapper para mapear corretamente as datas
+
         modelMapper.addMappings(new PropertyMap<Reserva, ReservaDTO>() {
             @Override
             protected void configure() {
@@ -45,14 +46,14 @@ public class ReservaController {
     }
 
     @PostMapping("/reservas")
-    public ReservaDTO createReserva(@RequestBody ReservaDTO reservaDTO) {
+    public ReservaDTO createReserva(@Valid @RequestBody ReservaDTO reservaDTO) {
         Reserva reserva = convertToEntity(reservaDTO);
         Reserva reservaCreated = reservaService.saveReserva(reserva);
         return convertToDTO(reservaCreated);
     }
 
     @PutMapping("/reservas/{reservaId}")
-    public ReservaDTO updateReserva(@PathVariable Long reservaId, @RequestBody ReservaDTO reservaDTO) {
+    public ReservaDTO updateReserva(@Valid @PathVariable Long reservaId, @RequestBody ReservaDTO reservaDTO) {
         Reserva reserva = convertToEntity(reservaDTO);
         Reserva reservaUpdated = reservaService.updateReserva(reservaId, reserva);
         return convertToDTO(reservaUpdated);

@@ -1,5 +1,6 @@
 package org.dsc.locadora.controller;
 
+import jakarta.validation.Valid;
 import org.dsc.locadora.dto.VeiculoDTO;
 import org.dsc.locadora.models.Veiculo;
 import org.dsc.locadora.services.VeiculoService;
@@ -35,14 +36,14 @@ public class VeiculoController {
     }
 
     @PostMapping("/veiculos")
-    public VeiculoDTO createVeiculo(@RequestBody VeiculoDTO veiculoDTO) {
+    public VeiculoDTO createVeiculo(@Valid @RequestBody VeiculoDTO veiculoDTO) {
         Veiculo veiculo = convertToEntity(veiculoDTO);
         Veiculo veiculoCreated = veiculoService.saveVeiculo(veiculo);
         return convertToDTO(veiculoCreated);
     }
 
     @PutMapping("/veiculos/{veiculoId}")
-    public VeiculoDTO updateVeiculo(@PathVariable Long veiculoId, @RequestBody VeiculoDTO veiculoDTO) {
+    public VeiculoDTO updateVeiculo(@PathVariable Long veiculoId, @Valid @RequestBody VeiculoDTO veiculoDTO) {
         Veiculo veiculo = convertToEntity(veiculoDTO);
         Veiculo veiculoUpdated = veiculoService.updateVeiculo(veiculoId, veiculo);
         return convertToDTO(veiculoUpdated);
