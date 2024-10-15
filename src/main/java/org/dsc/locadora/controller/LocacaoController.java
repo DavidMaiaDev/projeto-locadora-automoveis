@@ -1,6 +1,6 @@
 package org.dsc.locadora.controller;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.dsc.locadora.dto.LocacaoDTO;
 import org.dsc.locadora.models.Locacao;
 import org.dsc.locadora.services.LocacaoService;

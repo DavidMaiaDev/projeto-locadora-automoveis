@@ -1,9 +1,7 @@
 package org.dsc.locadora.dto;
 
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 
 public class VeiculoDTO {
 
@@ -11,26 +9,32 @@ public class VeiculoDTO {
 
     @NotBlank
     private String modelo;
+
+    @NotBlank
     private String marca;
+
+    @NotBlank
+    @Pattern(regexp = "[A-Z]{3}-\\d{4}", message = "A placa deve estar no formato correto (ex: ABC-1234)")
     private String placa;
 
     @Min(1886)
     private int ano;
+
+    @NotNull
     private boolean disponibilidade;
-    private String categoria;
+
 
     @PositiveOrZero
     private double quilometragem;
 
 
-    public VeiculoDTO(Long id, String modelo, String marca, String placa, int ano, boolean disponibilidade, String categoria, double quilometragem) {
+    public VeiculoDTO(Long id, String modelo, String marca, String placa, int ano, boolean disponibilidade, double quilometragem) {
         this.id = id;
         this.modelo = modelo;
         this.marca = marca;
         this.placa = placa;
         this.ano = ano;
         this.disponibilidade = disponibilidade;
-        this.categoria = categoria;
         this.quilometragem = quilometragem;
     }
 

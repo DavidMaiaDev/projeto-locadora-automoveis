@@ -1,7 +1,7 @@
 package org.dsc.locadora.models;
 
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 public class Veiculo {

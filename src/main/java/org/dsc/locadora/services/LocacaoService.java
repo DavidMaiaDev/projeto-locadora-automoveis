@@ -1,8 +1,7 @@
 package org.dsc.locadora.services;
 
-import org.dsc.locadora.models.Cliente;
+
 import org.dsc.locadora.models.Locacao;
-import org.dsc.locadora.models.Veiculo;
 import org.dsc.locadora.repository.ClienteRepository;
 import org.dsc.locadora.repository.LocacaoRepository;
 import org.dsc.locadora.repository.VeiculoRepository;
@@ -34,6 +33,10 @@ public class LocacaoService {
 
     public Locacao saveLocacao(Locacao locacao) {
         return locacaoRepository.save(locacao);
+    }
+
+    public Optional<Locacao> getLocacaoById(Long id) {
+        return locacaoRepository.findById(id);
     }
 
     public Locacao updateLocacao(Long id, Locacao locacaoAtualizada) {

@@ -1,6 +1,8 @@
 package org.dsc.locadora.dto;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -10,10 +12,22 @@ public class ReservaDTO {
 
     @NotNull
     private Long clienteId;
+    @NotNull
     private Long veiculoId;
+
+    @NotNull
+    @FutureOrPresent(message = "A data de reserva não pode estar no passado")
     private LocalDate dataReserva;
+
+    @NotNull
+    @FutureOrPresent(message = "A data de início não pode estar no passado")
     private LocalDate dataInicio;
+
+    @NotNull
+    @FutureOrPresent(message = "A data final não pode estar no passado")
     private LocalDate dataFim;
+
+    @NotBlank
     private String status;
 
     public ReservaDTO(Long id, Long clienteId, Long veiculoId, LocalDate dataReserva, LocalDate dataInicio, LocalDate dataFim, String status) {

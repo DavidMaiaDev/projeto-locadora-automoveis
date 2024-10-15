@@ -1,10 +1,10 @@
 package org.dsc.locadora.dto;
 
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class ClienteDTO {
 
@@ -20,6 +20,8 @@ public class ClienteDTO {
 
     @Email
     private String email;
+
+    @NotBlank
     private String endereco;
 
     public ClienteDTO(Long id, String nome, String cpf, String email, String endereco) {

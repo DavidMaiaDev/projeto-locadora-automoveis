@@ -1,6 +1,6 @@
 package org.dsc.locadora.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 
 import java.time.LocalDate;

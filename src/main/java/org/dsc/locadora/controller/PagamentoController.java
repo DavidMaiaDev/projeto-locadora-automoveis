@@ -1,9 +1,11 @@
 package org.dsc.locadora.controller;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.dsc.locadora.dto.PagamentoDTO;
 import org.dsc.locadora.models.Pagamento;
+import org.dsc.locadora.models.Locacao;
 import org.dsc.locadora.services.PagamentoService;
+import org.dsc.locadora.services.LocacaoService; // Importação do LocacaoService
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 public class PagamentoController {
 
     private final PagamentoService pagamentoService;
+    private final LocacaoService locacaoService;
     private final ModelMapper modelMapper;
 
-    public PagamentoController(PagamentoService pagamentoService, ModelMapper modelMapper) {
+    public PagamentoController(PagamentoService pagamentoService, LocacaoService locacaoService, ModelMapper modelMapper) {
         this.pagamentoService = pagamentoService;
+        this.locacaoService = locacaoService; // Inicializa LocacaoService
         this.modelMapper = modelMapper;
     }
 
@@ -55,13 +59,20 @@ public class PagamentoController {
         pagamentoService.deletePagamento(pagamentoId);
     }
 
-    // Converte o modelo Pagamento para PagamentoDTO usando ModelMapper
+
     private PagamentoDTO convertToDTO(Pagamento pagamento) {
         return modelMapper.map(pagamento, PagamentoDTO.class);
     }
 
-    // Converte o DTO PagamentoDTO para o modelo Pagamento usando ModelMapper
+
     private Pagamento convertToEntity(PagamentoDTO pagamentoDTO) {
-        return modelMapper.map(pagamentoDTO, Pagamento.class);
+        Pagamento pagamento = modelMapper.map(pagamentoDTO, Pagamento.class);
+
+        if (pagamentoDTO.getLocacaoId() != null) {
+            Locacao locacao = locacaoService.getLocacaoById(pagamentoDTO.getLocacaoId())
+                    .orElseThrow(() -> new RuntimeException("Locação não encontrada"));
+            pagamento.setLocacao(locacao);
+        }
+        return pagamento;
     }
 }
