@@ -2,6 +2,7 @@ package org.dsc.locadora.services;
 
 import org.dsc.locadora.exception.ErroMessage;
 import org.dsc.locadora.exception.EntityNotFoundException;
+import org.dsc.locadora.exception.InvalidDataException;
 import org.dsc.locadora.models.Cliente;
 import org.dsc.locadora.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,13 @@ public class ClienteService {
     }
 
     public Cliente saveCliente(Cliente cliente) {
+        this.validateClienteData(cliente);
+
         return clienteRepository.save(cliente);
     }
 
     public Cliente updateCliente(Long id, Cliente clientUpdate) {
+        this.validateClienteData(clientUpdate);
         Optional<Cliente> clientOpt = this.getOptionalClienteOrThrows(id);
 
         if (clientOpt.isPresent()) {
@@ -56,5 +60,15 @@ public class ClienteService {
             throw new EntityNotFoundException(ErroMessage.CLIENTE_NOT_FOUND);
         }
         return clienteOpt;
+    }
+
+    private void validateClienteData(Cliente cliente) {
+        if (cliente.getCpf() == null || cliente.getCpf().length() != 11) {
+            throw new InvalidDataException(ErroMessage.INVALID_CPF);
+        }
+
+        if (cliente.getEmail() == null || !cliente.getEmail().contains("@")) {
+            throw new InvalidDataException(ErroMessage.INVALID_EMAIL);
+        }
     }
 }
