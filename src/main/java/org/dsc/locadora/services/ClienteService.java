@@ -1,7 +1,7 @@
 package org.dsc.locadora.services;
 
 import org.dsc.locadora.exception.ErroMessage;
-import org.dsc.locadora.exception.ItemNotFoundException;
+import org.dsc.locadora.exception.EntityNotFoundException;
 import org.dsc.locadora.models.Cliente;
 import org.dsc.locadora.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -53,7 +53,7 @@ public class ClienteService {
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
 
         if (!clienteOpt.isPresent()) {
-            throw new ItemNotFoundException(ErroMessage.CLIENTE_NOT_FOUND);
+            throw new EntityNotFoundException(ErroMessage.CLIENTE_NOT_FOUND);
         }
         return clienteOpt;
     }
