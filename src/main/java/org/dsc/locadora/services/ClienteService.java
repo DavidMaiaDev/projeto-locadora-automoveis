@@ -1,5 +1,8 @@
 package org.dsc.locadora.services;
 
+import org.dsc.locadora.exception.ErroMessage;
+import org.dsc.locadora.exception.EntityNotFoundException;
+import org.dsc.locadora.exception.InvalidDataException;
 import org.dsc.locadora.models.Cliente;
 import org.dsc.locadora.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -20,28 +23,52 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Optional<Cliente> getCliente(Long id) {
-        return clienteRepository.findById(id);
+    public  Optional<Cliente> getCliente(Long id) {
+        return this.getOptionalClienteOrThrows(id);
     }
 
     public Cliente saveCliente(Cliente cliente) {
+        this.validateClienteData(cliente);
+
         return clienteRepository.save(cliente);
     }
 
-    public Cliente updateCliente(Long id, Cliente clienteAtualizado) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-        if (clienteOpt.isPresent()) {
-            Cliente clienteExistente = clienteOpt.get();
-            clienteExistente.setNome(clienteAtualizado.getNome());
-            clienteExistente.setCpf(clienteAtualizado.getCpf());
-            clienteExistente.setEmail(clienteAtualizado.getEmail());
-            clienteExistente.setEndereco(clienteAtualizado.getEndereco());
-            return clienteRepository.save(clienteExistente);
+    public Cliente updateCliente(Long id, Cliente clientUpdate) {
+        this.validateClienteData(clientUpdate);
+        Optional<Cliente> clientOpt = this.getOptionalClienteOrThrows(id);
+
+        if (clientOpt.isPresent()) {
+            Cliente clientSaved = clientOpt.get();
+            clientSaved.setNome(clientUpdate.getNome());
+            clientSaved.setCpf(clientUpdate.getCpf());
+            clientSaved.setEmail(clientUpdate.getEmail());
+            clientSaved.setEndereco(clientUpdate.getEndereco());
+            return clienteRepository.save(clientSaved);
         }
         return null;
     }
 
     public void deleteCliente(Long id) {
+        this.getOptionalClienteOrThrows(id);
         clienteRepository.deleteById(id);
+    }
+
+    private Optional<Cliente> getOptionalClienteOrThrows(Long id) {
+        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+
+        if (!clienteOpt.isPresent()) {
+            throw new EntityNotFoundException(ErroMessage.CLIENTE_NOT_FOUND);
+        }
+        return clienteOpt;
+    }
+
+    private void validateClienteData(Cliente cliente) {
+        if (cliente.getCpf() == null || cliente.getCpf().length() != 11) {
+            throw new InvalidDataException(ErroMessage.INVALID_CPF);
+        }
+
+        if (cliente.getEmail() == null || !cliente.getEmail().contains("@")) {
+            throw new InvalidDataException(ErroMessage.INVALID_EMAIL);
+        }
     }
 }
