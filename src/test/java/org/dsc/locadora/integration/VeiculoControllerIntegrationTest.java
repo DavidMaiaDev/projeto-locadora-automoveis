@@ -66,7 +66,6 @@ public class VeiculoControllerIntegrationTest {
                 .andExpect(jsonPath("$.placa").value("ABC-1234"));
     }
 
-    // Teste para atualizar um veículo existente
     @Test
     @Order(4)
     public void testUpdateVeiculo() throws Exception {
@@ -90,7 +89,7 @@ public class VeiculoControllerIntegrationTest {
                 .andExpect(jsonPath("$.placa").value("DEF-5678"));
     }
 
-    // Teste para deletar um veículo por ID
+
     @Test
     @Order(5)
     public void testDeleteVeiculo() throws Exception {

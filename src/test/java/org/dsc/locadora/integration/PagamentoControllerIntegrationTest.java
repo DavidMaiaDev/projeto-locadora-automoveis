@@ -1,5 +1,8 @@
 package org.dsc.locadora.integration;
 
+import org.dsc.locadora.models.Locacao;
+import org.dsc.locadora.repository.LocacaoRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,6 +23,17 @@ public class PagamentoControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private LocacaoRepository locacaoRepository;
+
+    @BeforeEach
+    public void setup() {
+
+        Locacao locacao = new Locacao();
+        locacao.setId(1L);
+        locacaoRepository.save(locacao);
+    }
 
     @Test
     @Order(1)
@@ -76,7 +90,6 @@ public class PagamentoControllerIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.valor").value(150.00));
     }
-
 
     @Test
     @Order(5)

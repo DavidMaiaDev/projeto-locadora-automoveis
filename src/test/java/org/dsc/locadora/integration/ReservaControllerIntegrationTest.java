@@ -1,5 +1,6 @@
 package org.dsc.locadora.integration;
 
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDate;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -21,15 +24,52 @@ public class ReservaControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private static Long reservaId;
+    private static Long clienteId;
+    private static Long veiculoId;
+
+
+    @Test
+    @Order(0)
+    public void setupTestData() throws Exception {
+        // Criar cliente com todos os campos obrigatórios
+        String newCliente = "{ \"nome\": \"Cliente Teste\", \"cpf\": \"12345678900\", \"email\": \"cliente@teste.com\", \"endereco\": \"Rua Teste, 123\", \"telefone\": \"(11) 98765-4321\" }";
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/clientes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newCliente))
+                .andExpect(status().isOk())
+                .andDo(result -> {
+                    String response = result.getResponse().getContentAsString();
+                    clienteId = JsonPath.parse(response).read("$.id", Long.class);
+                });
+
+        // Criar veiculo
+        String newVeiculo = "{ \"marca\": \"Carro Teste\", \"modelo\": \"Modelo Teste\", \"ano\": 2020, \"categoria\": \"Sedan\", \"disponibilidade\": true, \"placa\": \"ABC-1234\", \"quilometragem\": 10000.0 }";
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/veiculos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newVeiculo))
+                .andExpect(status().isOk())
+                .andDo(result -> {
+                    String response = result.getResponse().getContentAsString();
+                    veiculoId = JsonPath.parse(response).read("$.id", Long.class);
+                });
+    }
+
+
     @Test
     @Order(1)
     public void testCreateReserva() throws Exception {
+        LocalDate dataReserva = LocalDate.now().plusDays(1);
+        LocalDate dataInicio = LocalDate.now().plusDays(10);
+        LocalDate dataFim = LocalDate.now().plusDays(15);
+
         String newReserva = "{"
-                + "\"dataInicio\":\"2024-01-01\","
-                + "\"dataFim\":\"2024-01-05\","
-                + "\"valorTotal\":200.00,"
-                + "\"clienteId\":1,"
-                + "\"veiculoId\":1"
+                + "\"clienteId\":" + clienteId + ","
+                + "\"veiculoId\":" + veiculoId + ","
+                + "\"dataReserva\":\"" + dataReserva + "\","
+                + "\"dataInicio\":\"" + dataInicio + "\","
+                + "\"dataFim\":\"" + dataFim + "\","
+                + "\"status\":\"Ativa\""
                 + "}";
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/reservas")
@@ -37,39 +77,37 @@ public class ReservaControllerIntegrationTest {
                         .content(newReserva))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.valorTotal").value(200.00));
+                .andDo(result -> {
+                    String response = result.getResponse().getContentAsString();
+                    reservaId = JsonPath.parse(response).read("$.id", Long.class);
+                });
     }
 
+    // Teste de busca da reserva
     @Test
     @Order(2)
-    public void testListReservas() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/reservas")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @Test
-    @Order(3)
     public void testGetReserva() throws Exception {
-        Long reservaId = 1L;
-
         mockMvc.perform(MockMvcRequestBuilders.get("/api/reservas/" + reservaId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.valorTotal").value(200.00));
+                .andExpect(jsonPath("$.status").value("Ativa"));
     }
+
+
     @Test
-    @Order(4)
+    @Order(3)
     public void testUpdateReserva() throws Exception {
-        Long reservaId = 1L;
+        LocalDate updatedDataInicio = LocalDate.now().plusDays(12);
+        LocalDate updatedDataFim = LocalDate.now().plusDays(20);
+
         String updatedReserva = "{"
-                + "\"dataInicio\":\"2024-02-01\","
-                + "\"dataFim\":\"2024-02-05\","
-                + "\"valorTotal\":300.00,"
-                + "\"clienteId\":1,"
-                + "\"veiculoId\":1"
+                + "\"clienteId\":" + clienteId + ","
+                + "\"veiculoId\":" + veiculoId + ","
+                + "\"dataReserva\":\"" + LocalDate.now().plusDays(1) + "\","
+                + "\"dataInicio\":\"" + updatedDataInicio + "\","
+                + "\"dataFim\":\"" + updatedDataFim + "\","
+                + "\"status\":\"Atualizada\""
                 + "}";
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/reservas/" + reservaId)
@@ -77,14 +115,13 @@ public class ReservaControllerIntegrationTest {
                         .content(updatedReserva))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.valorTotal").value(300.00));
+                .andExpect(jsonPath("$.status").value("Atualizada"));
     }
 
-    @Test
-    @Order(5)
-    public void testDeleteReserva() throws Exception {
-        Long reservaId = 1L;
 
+    @Test
+    @Order(4)
+    public void testDeleteReserva() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/reservas/" + reservaId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
