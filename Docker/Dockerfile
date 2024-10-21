@@ -23,7 +23,7 @@ FROM maven:3-eclipse-temurin-21-alpine
 WORKDIR /app
 
 # Copie o arquivo JAR da aplicação do estágio de build
-COPY --from=build /app/target/todolist-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/projeto-locadora-0.0.1-SNAPSHOT.jar app.jar
 
 # Exponha a porta que a aplicação irá rodar
 EXPOSE 8080
