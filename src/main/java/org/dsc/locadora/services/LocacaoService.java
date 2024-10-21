@@ -14,13 +14,9 @@ import java.util.Optional;
 public class LocacaoService {
 
     private final LocacaoRepository locacaoRepository;
-    private final ClienteRepository clienteRepository;
-    private final VeiculoRepository veiculoRepository;
 
     public LocacaoService(LocacaoRepository locacaoRepository, ClienteRepository clienteRepository, VeiculoRepository veiculoRepository) {
         this.locacaoRepository = locacaoRepository;
-        this.clienteRepository = clienteRepository;
-        this.veiculoRepository = veiculoRepository;
     }
 
     public List<Locacao> listLocacoes() {
